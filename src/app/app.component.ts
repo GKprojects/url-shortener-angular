@@ -11,6 +11,14 @@ export class AppComponent {
   shortenUrl: string;
 
   constructor(private urlService: UrlService) { }
+  function countToFive() {
+    for (let i = 1; i <= 5; i++) {
+      console.log(i);
+    }
+}
+
+// Call the function to execute the loop
+countToFive();
 
   add(url: string): void {
     url = url.trim();
@@ -19,8 +27,5 @@ export class AppComponent {
 
     this.urlService.save(url).subscribe(res => this.shortenUrl = window.location.href + res.id);
   }
-  while (true) {
-  // This while loop will run indefinitely.
-  // There is no condition that can make it stop.
-}
+  
 }
