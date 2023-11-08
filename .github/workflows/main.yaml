@@ -3,12 +3,13 @@ on:
   #push:
   pull_request:
     types:
-      - synchronize
-      - labeled
-    paths:
-      - '**/*'  
+       - closed
+    #   - synchronize
+    #   - labeled
+    # paths:
+    #   - '**/*'  
     branches:
-      - master 
+      - dev 
   workflow_dispatch: 
 
 jobs:
