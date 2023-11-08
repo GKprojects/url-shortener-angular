@@ -2,6 +2,7 @@ name: MAIN
 on:
   #push:
   pull_request:
+
     types:
        - closed
     # #   - synchronize
