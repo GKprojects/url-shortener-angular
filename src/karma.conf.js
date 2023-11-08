@@ -10,7 +10,7 @@ module.exports = function(config) {
 
     // Add the xmlReporter configuration
     xmlReporter: {
-      outputFile: '../coverage/test-results.xml' // Specify the desired output file name and path
+      outputFile: 'test-results.xml' // Specify the desired output file name and path
     },
 
     // ... other Karma configuration settings ...
