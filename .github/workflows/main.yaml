@@ -4,6 +4,7 @@ on:
     types:
       - closed
     branches:
+      - uat
       - dev
   workflow_dispatch:
   
