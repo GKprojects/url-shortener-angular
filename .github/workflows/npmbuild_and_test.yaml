@@ -21,8 +21,9 @@ jobs:
     - name: karma plugin install
       run: |
         npm update caniuse-lite browserslist
-        npm install karma-junit-reporter --save-dev
-      
+          #npm install karma-junit-reporter --save-dev
+        npm install karma-xml-reporter --save-dev
+
     - name: Installation
       run: npm install
     
@@ -44,3 +45,4 @@ jobs:
               dist
               package.json
               coverage
+              test-results.xml
