@@ -1,8 +1,8 @@
 name: docker build push trivy scanning
 on:
   workflow_call:
-  # push:
   workflow_dispatch:
+
 jobs:
     docker_build_push:
           runs-on: ubuntu-latest

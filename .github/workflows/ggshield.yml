@@ -1,7 +1,6 @@
-name: nebular
+name: GGshield
 on:
   workflow_call:
-  
 jobs:
   security_scan:
       runs-on: ubuntu-latest

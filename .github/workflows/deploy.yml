@@ -1,7 +1,6 @@
 name: angular deployment
 on:
   workflow_call:
-  
 jobs:
   build_and_test:
       runs-on: ubuntu-latest

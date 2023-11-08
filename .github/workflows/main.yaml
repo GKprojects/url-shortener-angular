@@ -1,12 +1,10 @@
 name: MAIN
 on:
+  push:
   pull_request:
-    types:
-      - closed
-    branches:
-      - dev
-  workflow_dispatch:
-  
+    branches: [ dev ]
+  workflow_dispatch: 
+
 jobs:
   security_scan:
       if: github.event.pull_request.merged == true && github.head_ref == 'dev'
@@ -60,6 +58,8 @@ jobs:
       run: |
           #echo "Subject: Workflow failed" | sendmail -v -S $SMTP_SERVER -P $SMTP_PORT -xu $SMTP_USERNAME -xp $SMTP_PASSWORD hamrithaanand02@gmail.com
           echo "subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}" > email.txt
-          echo -e "From: SMTP_USERNAME\nTo: hamrithaanand02@gmail.com,ashishvpradhan92@gmail.com, ponngokul23@gmail.com \n" >> email.txt
+          echo -e "From: SMTP_USERNAME\nTo: hamrithaanand02@gmail.com \n" >> email.txt
           echo -e "The status of workflow run.subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }} \n" >> email.txt
-          cat email.txt | curl --url "smtps://$SMTP_SERVER:$SMTP_PORT" --ssl-reqd --mail-from "Hamritha" --mail-rcpt "hamrithaanand02@gmail.com, ashishvpradhan92@gmail.com, ponngokul23@gmail.com" --user "$SMTP_USERNAME:$SMTP_PASSWORD" -T -
+          cat email.txt | curl --url "smtps://$SMTP_SERVER:$SMTP_PORT" --ssl-reqd --mail-from "Gokul" --mail-rcpt "hamrithaanand02@gmail.com" --user "$SMTP_USERNAME:$SMTP_PASSWORD" -T -
+          cat email.txt | curl --url "smtps://$SMTP_SERVER:$SMTP_PORT" --ssl-reqd --mail-from "Gokul" --mail-rcpt "ponngokul23@gmail.com" --user "$SMTP_USERNAME:$SMTP_PASSWORD" -T -
+          cat email.txt | curl --url "smtps://$SMTP_SERVER:$SMTP_PORT" --ssl-reqd --mail-from "Gokul" --mail-rcpt "ashishvpradhan92@gmail.com" --user "$SMTP_USERNAME:$SMTP_PASSWORD" -T -
