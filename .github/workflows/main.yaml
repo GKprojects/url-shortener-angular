@@ -2,7 +2,6 @@ name: MAIN
 on:
   #push:
   pull_request:
-
     types:
        - closed
     # #   - synchronize
@@ -11,11 +10,12 @@ on:
     # #   - '**/*'  
     branches:
       -  master
+      -  dev
   workflow_dispatch: 
 
 jobs:
   security_scan:
-      if: github.event.pull_request.merged == true && github.event.pull_request.closed == true && github.head_ref == 'master'
+      if: github.event.pull_request.merged == true && github.event.pull_request.closed == true
       name: GGshield
       uses: ./.github/workflows/ggshield.yml
       secrets: inherit
