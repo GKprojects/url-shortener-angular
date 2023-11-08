@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UrlService } from './services/url.service';
 
 @Component({
@@ -6,19 +6,34 @@ import { UrlService } from './services/url.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'url-shortener';
   shortenUrl: string;
 
   constructor(private urlService: UrlService) { }
-  function countToFive() {
-    for (let i = 1; i <= 5; i++) {
-      console.log(i);
-    }
-}
+  users: any[] = [];
+  hasPermission = false;
 
-// Call the function to execute the loop
-countToFive();
+  constructor() {}
+        
+  ngOnInit(): any {
+    if (this.hasPermission) {
+      this.users = this.getUsers();
+    } else {
+      this.users = [];
+      this.callLoop()
+
+    }
+  }
+  getUsers() {
+    return [1, 2, 3, 4, 5];
+  }
+   
+   callLoop(){
+    for(let i=0;i<5;i++){
+      //console.log('Looping..');
+    }
+  }
 
   add(url: string): void {
     url = url.trim();
