@@ -1,9 +1,8 @@
 name: MAIN
 on:
-  #push:
+  push:
   pull_request:
-    branches: [ master ]
-
+    branches: [ dev ]
   workflow_dispatch: 
 
 jobs:
