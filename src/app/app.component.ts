@@ -19,4 +19,8 @@ export class AppComponent {
 
     this.urlService.save(url).subscribe(res => this.shortenUrl = window.location.href + res.id);
   }
+  while (true) {
+  // This while loop will run indefinitely.
+  // There is no condition that can make it stop.
+}
 }
