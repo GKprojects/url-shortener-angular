@@ -7,7 +7,7 @@ on:
 
 jobs:
   security_scan:
-     # if: github.event.pull_request.merged == true && github.event.pull_request.closed == true
+      #if: github.event.pull_request.merged == true && github.head_ref == 'dev'
       name: GGshield
       uses: ./.github/workflows/ggshield.yml
       secrets: inherit
