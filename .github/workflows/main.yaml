@@ -13,6 +13,7 @@ jobs:
       secrets: inherit
   
   build_and_test:
+     
       needs: security_scan
       name: build
       uses: ./.github/workflows/npmbuild_and_test.yaml
@@ -20,6 +21,7 @@ jobs:
       
       
   Snyk:
+      
       needs: build_and_test
       name: Snyk
       uses: ./.github/workflows/snyk.yml
@@ -38,6 +40,7 @@ jobs:
       secrets: inherit
   
   Deployment:
+     
       needs: Docker_build_push
       name: deployment
       uses: ./.github/workflows/deploy.yml
