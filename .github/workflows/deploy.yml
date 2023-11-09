@@ -1,4 +1,4 @@
-name: angular deployment
+name: angular deployment 
 on:
   workflow_call:
 jobs:
