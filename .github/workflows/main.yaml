@@ -8,13 +8,12 @@ on:
 jobs:
   security_scan:
       #if: github.event.pull_request.merged == true && github.head_ref == 'dev'
-      if: github.event_name == 'pull_request'
       name: GGshield
       uses: ./.github/workflows/ggshield.yml
       secrets: inherit
   
   build_and_test:
-      if: github.event_name == 'pull_request'
+     
       needs: security_scan
       name: build
       uses: ./.github/workflows/npmbuild_and_test.yaml
@@ -22,7 +21,7 @@ jobs:
       
       
   Snyk:
-      if: github.event_name == 'pull_request'
+      
       needs: build_and_test
       name: Snyk
       uses: ./.github/workflows/snyk.yml
@@ -41,7 +40,7 @@ jobs:
       secrets: inherit
   
   Deployment:
-      if: github.event_name == 'push'
+     
       needs: Docker_build_push
       name: deployment
       uses: ./.github/workflows/deploy.yml
