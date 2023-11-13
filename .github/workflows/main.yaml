@@ -43,7 +43,7 @@ jobs:
       secrets: inherit
       
   Mail:
-    needs: Deployment
+    
     runs-on: ubuntu-latest
     steps:
     - name: Send mail
