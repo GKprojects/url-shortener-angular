@@ -24,7 +24,7 @@ jobs:
         run: |
               # Replace the image and tag in the manifest file
                echo "GitHub SHA: ${{ github.run_number }}"
-               sed -i "s|${{ secrets.DOCKER_REPO }}:.*|${{ secrets.DOCKER_REPO }}:${{ github.run_number }}|" ./manifest_angular/deployment.yaml
+               sed -i "s|${{ secrets.ACR_REPO }}:.*|${{ secrets.ACR_REPO }}:${{ github.run_number }}|" ./manifest_angular/deployment.yaml
      
       - name: Debug - Show Git Status After Changes
         run: git status
