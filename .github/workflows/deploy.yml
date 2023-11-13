@@ -2,7 +2,7 @@ name: angular deployment
 on:
   workflow_call:
 jobs:
-  build_and_test:
+  deployment:
       runs-on: ubuntu-latest
       steps:
       - name: Checkout
