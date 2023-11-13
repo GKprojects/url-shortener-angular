@@ -34,7 +34,7 @@ jobs:
       run: npm run build
       
     - name: test
-      run: npm run test-headless
+      run: npm run test-headless && exit 0
       continue-on-error: true
       
     - name: Upload artifact for deployment job
