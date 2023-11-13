@@ -3,8 +3,15 @@ on:
   workflow_call:
   workflow_dispatch:
   
+permissions:
+  contents: read
+  
 jobs:
     docker_build_push:
+          permissions:
+            contents: read # for actions/checkout to fetch code
+            security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+            actions: read # only required for a private repository by github/codeql-action/upload-sa
           runs-on: ubuntu-latest
           steps:
           - name: Checkout
@@ -22,18 +29,32 @@ jobs:
           - name: Build Container image
             run: docker build -t ${{ secrets.ACR_REPO }}:${{ github.run_number }} .
           
-
           - name: Run Trivy vulnerability scanner
-            uses: aquasecurity/trivy-action@master
+            uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
             with:
-                  image-ref: '${{ secrets.ACR_REPO }}:${{ github.run_number }}'
-                  format: 'sarif'
-                  output: 'trivy-results.sarif'
-        
+              image-ref: '${{ secrets.ACR_REPO }}:${{ github.run_number }}'
+              format: 'template'
+              template: '@/contrib/sarif.tpl'
+              output: 'trivy-results.sarif'
+              severity: 'CRITICAL,HIGH'
+    
           - name: Upload Trivy scan results to GitHub Security tab
             uses: github/codeql-action/upload-sarif@v2
             with:
-                sarif_file: 'trivy-results.sarif'
+              sarif_file: 'trivy-results.sarif'
+
+
+          # - name: Run Trivy vulnerability scanner
+          #   uses: aquasecurity/trivy-action@master
+          #   with:
+          #         image-ref: '${{ secrets.ACR_REPO }}:${{ github.run_number }}'
+          #         format: 'sarif'
+          #         output: 'trivy-results.sarif'
+        
+          # - name: Upload Trivy scan results to GitHub Security tab
+          #   uses: github/codeql-action/upload-sarif@v2
+          #   with:
+          #       sarif_file: 'trivy-results.sarif'
           
           - name: Publish Docker image
             run: docker push ${{ secrets.ACR_REPO }}:${{ github.run_number }}
