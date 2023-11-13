@@ -3,7 +3,7 @@ on:
   workflow_call:
   
 jobs:
-  build_and_test:
+  code_analysis:
       runs-on: ubuntu-latest
       steps:
       - name: Checkout
