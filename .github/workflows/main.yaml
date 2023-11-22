@@ -1,18 +1,16 @@
 name: MAIN
 on:
   push:
-  pull_request:
-    branches: [ qa ]
   workflow_dispatch: 
 
 jobs:
   security_scan:
-      #if: github.event.pull_request.merged == true && github.head_ref == 'dev'
       name: GGshield
       uses: ./.github/workflows/ggshield.yml
       secrets: inherit
   
   build_and_test:
+     
       needs: security_scan
       name: build
       uses: ./.github/workflows/npmbuild_and_test.yaml
@@ -20,6 +18,7 @@ jobs:
       
       
   Snyk:
+      
       needs: build_and_test
       name: Snyk
       uses: ./.github/workflows/snyk.yml
@@ -38,28 +37,8 @@ jobs:
       secrets: inherit
   
   Deployment:
+     
       needs: Docker_build_push
       name: deployment
       uses: ./.github/workflows/deploy.yml
       secrets: inherit
-      
-  Mail:
-    needs: Deployment
-    runs-on: ubuntu-latest
-    steps:
-    - name: Send mail
-      if: always()
-      env:
-          SMTP_SERVER: smtp.gmail.com
-          SMTP_PORT: 465
-          SMTP_USERNAME: ${{ secrets.EMAIL_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-
-      run: |
-          #echo "Subject: Workflow failed" | sendmail -v -S $SMTP_SERVER -P $SMTP_PORT -xu $SMTP_USERNAME -xp $SMTP_PASSWORD hamrithaanand02@gmail.com
-          echo "subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}" > email.txt
-          echo -e "From: SMTP_USERNAME\nTo: hamrithaanand02@gmail.com \n" >> email.txt
-          echo -e "The status of workflow run.subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }} \n" >> email.txt
-          cat email.txt | curl --url "smtps://$SMTP_SERVER:$SMTP_PORT" --ssl-reqd --mail-from "Gokul" --mail-rcpt "hamrithaanand02@gmail.com" --user "$SMTP_USERNAME:$SMTP_PASSWORD" -T -
-          cat email.txt | curl --url "smtps://$SMTP_SERVER:$SMTP_PORT" --ssl-reqd --mail-from "Gokul" --mail-rcpt "ponngokul23@gmail.com" --user "$SMTP_USERNAME:$SMTP_PASSWORD" -T -
-          cat email.txt | curl --url "smtps://$SMTP_SERVER:$SMTP_PORT" --ssl-reqd --mail-from "Gokul" --mail-rcpt "ashishvpradhan92@gmail.com" --user "$SMTP_USERNAME:$SMTP_PASSWORD" -T -
