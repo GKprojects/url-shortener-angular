@@ -1,0 +1,18 @@
+name: Example Workflow
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Display head ref
+      run: echo "Head Ref: ${{ github.event.pull_request.head.ref }}"
